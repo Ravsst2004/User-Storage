@@ -57,7 +57,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit', [
+            'title' => 'Edit',
+            'user' => $user
+        ]);
     }
 
     /**
@@ -65,7 +68,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+
+        $credentials = $request->validate([
+            'name' => 'required|max:55|min:5',
+            'username' => 'required|max:20|min:5',
+        ]);
+        $user->where('id', $user->id)->update($credentials);
+
+        return redirect('/user')->with('success', 'User successfully Updated');
     }
 
     /**
@@ -73,6 +83,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        User::destroy($user->id);
+
+        return redirect('/user')->with('success', 'User successfully deleted');
     }
 }

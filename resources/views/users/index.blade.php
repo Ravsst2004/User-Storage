@@ -6,6 +6,7 @@
     <a href="/user/create">ADD</a>
 </div>
 
+
 @if (session()->has('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>{{ session('success') }}</strong>
@@ -30,9 +31,13 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->username }}</td>
             <td>{{ $user->email }}</td>
-            <td>
-                <a href="">Edit</a>
-                <a href="">Delete</a>
+            <td class="d-flex">
+                <a href="user/{{ $user->id }}/edit" class="btn btn-warning text-decoration-none">Edit</a>
+                <form action="user/{{ $user->id }}" method="POST">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-danger mx-1">DELETE</button>
+                </form>
             </td>
         </tr>
         @endforeach

@@ -21,5 +21,3 @@ Route::get('/', function () {
 });
 
 Route::resource('/user', UserController::class);
-
-
