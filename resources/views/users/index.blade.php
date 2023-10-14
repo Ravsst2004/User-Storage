@@ -2,19 +2,17 @@
 
 @section('container')
 
-<div class="btn btn-">
-    <a href="/user/create">ADD</a>
-</div>
+<a href="/user/create" class="btn btn-primary text-decoration-none">ADD</a>
 
 
 @if (session()->has('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
     <strong>{{ session('success') }}</strong>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 
-<table class="table">
+<table class="table mt-1">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -25,6 +23,7 @@
         </tr>
     </thead>
     <tbody>
+        @if ($users->count())
         @foreach ($users as $user)
         <tr>
             <th scope="row">{{ $loop->iteration }}</th>
@@ -33,14 +32,21 @@
             <td>{{ $user->email }}</td>
             <td class="d-flex">
                 <a href="user/{{ $user->id }}/edit" class="btn btn-warning text-decoration-none">Edit</a>
-                <form action="user/{{ $user->id }}" method="POST">
-                    @method('delete')
+                <form action="user/{{ $user->id }}" method="POST" id="delete-form">
+                    @method('DELETE')
                     @csrf
-                    <button class="btn btn-danger mx-1">DELETE</button>
+                    <button type="submit" class="btn btn-danger mx-1">DELETE</button>
                 </form>
             </td>
         </tr>
         @endforeach
+        @else
+            <h1>User Not Found!</h1>
+        @endif
     </tbody>
+
+
 </table>
+
+{{ $users->links() }}
 @endsection

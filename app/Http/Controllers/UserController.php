@@ -12,9 +12,20 @@ class UserController extends Controller
      */
     public function index()
     {
+        $users = User::latest();
+
+        if (request('search')) {
+            $searchTerm = '%' . request('search') . '%';
+
+            $users->where(function($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm)
+                      ->orWhere('username', 'like', $searchTerm);
+            });
+        }
+
         return view('users.index', [
             'title' => 'UserCRUD',
-            'users' => User::all()
+            'users' => $users->paginate(10),
         ]);
     }
 
@@ -87,4 +98,18 @@ class UserController extends Controller
 
         return redirect('/user')->with('success', 'User successfully deleted');
     }
+
+    // public function search(Request $request)
+    // {
+    //     $users = User::latest();
+
+    //     if(request('search')) {
+    //         $users->where('name', 'like', '%' . request('search') . '%');
+    //     }
+
+    //     return view('users.index', [
+    //         'title' => 'UserCRUD',
+    //         'users' => $users::get()
+    //     ]);
+    // }
 }
