@@ -26,7 +26,7 @@
         @if ($users->count())
         @foreach ($users as $user)
         <tr>
-            <th scope="row">{{ $loop->iteration }}</th>
+            <th scope="row">{{ $users->firstItem() + $loop->index }}</th>
             <td>{{ $user->name }}</td>
             <td>{{ $user->username }}</td>
             <td>{{ $user->email }}</td>
