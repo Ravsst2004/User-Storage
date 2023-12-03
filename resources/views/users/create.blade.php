@@ -14,6 +14,7 @@
         </div>
         @enderror
     </div>
+    
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="username" value="{{ old('username') }}">

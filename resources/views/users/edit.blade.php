@@ -3,7 +3,7 @@
 @section('container')
 <h1>EDIT</h1>
 
-<form action="/user/{{ $user->id }}" method="POST">
+<form action="{{ route('profile.update', $user->id) }}" method="POST">
     @method('PUT')
     @csrf
     <div class="mb-3">
